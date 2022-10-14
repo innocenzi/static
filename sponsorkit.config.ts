@@ -13,17 +13,17 @@ export default defineConfig({
 	tiers: [
 		{
 			title: 'Backers',
-			preset: presets.base,
+			preset: presets.medium,
 		},
 		{
 			title: 'Sponsors',
 			monthlyDollars: 15,
-			preset: presets.medium,
+			preset: presets.large,
 		},
 		{
 			title: 'Gold sponsors',
 			monthlyDollars: 50,
-			preset: presets.large,
+			preset: presets.xl,
 		},
 	],
 })
