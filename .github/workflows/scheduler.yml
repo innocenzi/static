@@ -1,0 +1,43 @@
+name: Scheduler
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches: [main]
+
+jobs:
+  update-sponsors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.13.4
+
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+
+      - name: Install Node dependencies
+        run: pnpm install
+
+      - name: Update sponsors
+        run: pnpm sponsors
+        env:
+          SPONSORKIT_GITHUB_TOKEN: ${{ secrets.SPONSORKIT_GITHUB_TOKEN }}
+          SPONSORKIT_GITHUB_LOGIN: innocenzi
+
+      - name: Commit
+        uses: EndBug/add-and-commit@v4
+        with:
+          message: 'chore: update sponsors images'
+          add: 'sponsors.*'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
