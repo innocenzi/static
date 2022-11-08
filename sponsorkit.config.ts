@@ -12,7 +12,7 @@ export default defineConfig({
 	formats: ['json', 'svg', 'png'],
 	tiers: [
 		{
-			title: 'Past Sponsors',
+			title: 'Past sponsors',
 			monthlyDollars: -1,
 			preset: presets.xs,
 		},
